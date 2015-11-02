@@ -8,20 +8,26 @@ var server = http.createServer(function(req,res){
 var page = url.parse(req.url).pathname;
     if(page=="/")
 	page='index.html';
-fs.readFile('./'+page,'utf-8',
+console.log(page);
+fs.readFile('./'+page,
  function(error, content)
   {
    if(!error)
 {
   if(page.indexOf(".html")>-1)
 {
-    res.writeHead(200,{"Content-Type":"text/html"});
+    res.writeHead(200,{"Content-Type":"text/html; charset=utf-8"});
     res.end(content);
 }
-  if(page.indexOf(".jpg")>-1)
+ else if(page.indexOf(".jpg")>-1)
 {
-    res.writeHead(200,{"Content-TYpe":"img/jpg"});
+    res.writeHead(200,{"Content-Type":"img/jpg"});
     res.end(content, 'binary')
+}
+ else if(page.indexOf(".css")>-1)//else if(\.((css)$/.test(page))) marche aussi
+{
+    res.writeHead(200,{"Content-Type":"text/css"});
+    res.end(content);
 }
 
 }else
