@@ -1,14 +1,42 @@
+var mysql = require('mysql');
 var http = require('http');
 var url = require('url');
 var fs = require('fs');
 //var querystring = requite('querystring');
+var mySqlClient = mysql.createConnection({
+host : "51.254.221.93",
+user : "pacimod1",
+password : "ertexs",
+database : "base1"
 
+});
+var selectQuery = 'SELECT * FROM Member';
+mySqlClient.query(
+  selectQuery,
+  function select(error, results, fields) {
+    if (error) {
+      console.log(error);
+      mySqlClient.end();
+      return;
+    }
+ 
+    if ( results.length > 0 )  { 
+      var firstResult = results[ 0 ];
+      console.log('id: ' + firstResult['id']);
+      console.log('login: ' + firstResult['login']);
+      console.log('password: ' + firstResult['password']);
+    } else {
+      console.log("Pas de données");
+    }
+    mySqlClient.end();
+  }
+);
 var server = http.createServer(function(req,res){
 //chargemnt d'un page html
 var page = url.parse(req.url).pathname;
     if(page=="/")
 	page='index.html';
-console.log(page);
+//console.log(page);
 fs.readFile('./'+page,
  function(error, content)
   {
@@ -38,5 +66,6 @@ fs.readFile('./'+page,
 }
   }
 );
+
 });
 server.listen(80);
