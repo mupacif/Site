@@ -32,9 +32,9 @@ mySqlClient.query(
     mySqlClient.end();
   }
 );
-var server = http.createServer(function(req,res){
-    
-function (request, response) {
+
+
+var post = function (request, response) {
     if (request.method == 'POST') {
         var body = '';
 
@@ -50,9 +50,14 @@ function (request, response) {
         request.on('end', function () {
             var post = qs.parse(body);
             console.log(post['login']);
+            console.log(post['password']);
         });
     }
+ }   
     
+var server = http.createServer(function(req,res){
+
+post(req,res); 
 //chargemnt d'un page html
 var page = url.parse(req.url).pathname;
     if(page=="/")
