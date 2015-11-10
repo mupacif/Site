@@ -1,13 +1,15 @@
 
 
 html{
-    height: auto;
+    height: 100%;
 }
 body
 {
+    height: 100%;
     margin-top: auto;
     margin-left: 0px;
     margin-right: 0px;
+    margin-bottom: 0px;
     font-size:16px;
     line-height:1.6em;
     background: linear-gradient(palegreen, blue);
@@ -94,6 +96,8 @@ section
     border: 1px solid black;
 
     width:78%;
+   
+    height: 70%;
     background-color: azure;
    /* vertical-align: middle;*/
 }
@@ -104,6 +108,8 @@ main, article
 footer
 {
     text-align: center;
+    margin-top: auto;
+    margin-bottom: 0px;
 }
 img{
 max-width: 90%;
