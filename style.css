@@ -1,56 +1,136 @@
+
+
+html{
+    height: auto;
+}
 body
 {
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
+    margin-top: auto;
+    margin-left: 0px;
+    margin-right: 0px;
     font-size:16px;
-line-height:1.6em;
+    line-height:1.6em;
+    background: linear-gradient(palegreen, blue);
 }
 header
 {
+  
+    display: flex;
+    flex-basis: auto;
+    height: 100px;
+   
+    text-align: center;
+ 
+  
+}
+a{
+    text-decoration: none;
+}
+a:hover
+{
+    display: inline;
+    text-decoration: inherit;
+    color: aqua;
+    transition: 1s;
     
 }
+header h2
+{
+    width: 100%;
+   margin-bottom: 10 px;
+    margin-top: auto; 
+}
+
+
 nav
 {
-    width: 25%;
+    position: relative;
+    width: 20%;
     display: inline-block;
     border: 1px solid black;
+    border-right: none;
     vertical-align: top;
-}
-nav a{
-padding: 1.5em inherit;
+   
+   margin-right: -3px;
+    z-index: 100;
+ 
+
 }
 
+nav ul
+{
+    display:table;
+    table-layout: fixed;
+    width: 100%;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  
+   
+       table-layout:fixed;
+    padding-left: 0px;
+    
+    
+}
+nav li{
+
+   
+display:table-row;
+     width: 100%;
+    text-align: center;
+    background-color: azure;
+
+}
+nav li:hover
+{
+    background-color: blueviolet;
+   color: aqua;
+    transition: 0.5s;
+}
 
 section
-{
+{   
+       margin-left: -4px;
     display: inline-block;    
     border: 1px solid black;
-    padding: 5px;
-    width: 70%;
+
+    width:78%;
+    background-color: azure;
    /* vertical-align: middle;*/
+}
+main, article
+{
+    padding: 10px;
 }
 footer
 {
     text-align: center;
 }
 img{
-max-width: 100%;
+max-width: 90%;
 }
+
+
 
 @media screen and (max-width:640px)
 {
 nav
 {
     width: 100%;
-    display: flex;
-    border: 1px solid black;
-    vertical-align: top;
+  table-layout:fixed;
+    border: none;
+    border-top: 1px solid black;
 }
 nav li{
-display: inline;
-margin-left: 5px;
+   
+display:table-cell;
+     width: 100%;
+    background-color:oldlace;
+   
+
 }
+    a{
+        color: red;
+    }
 section
 {
     display: inline-block;    
