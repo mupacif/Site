@@ -83,6 +83,11 @@ fs.readFile('./'+page,
     res.writeHead(200,{"Content-Type":"text/css"});
     res.end(content);
 }
+ else if(page.indexOf(".js")>-1)//else if(\.((css)$/.test(page))) marche aussi
+{
+    res.writeHead(200,{"Content-Type":"text/javascript"});
+    res.end(content);
+}
 
 }else
 {
