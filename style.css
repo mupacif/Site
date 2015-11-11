@@ -13,6 +13,7 @@ body
     font-size:16px;
     line-height:1.6em;
     background: linear-gradient(palegreen, blue);
+  /*  transform: rotate(180deg);*/
 }
 header
 {
@@ -96,10 +97,19 @@ section
     border: 1px solid black;
 
     width:78%;
+    min-width: 660px;
    
-    height: 70%;
+    height: !80%;
     background-color: azure;
    /* vertical-align: middle;*/
+}
+section canvas
+{
+    margin:  auto;
+
+    display: flex;
+    background-color:aliceblue;
+    width: 100% inherit;
 }
 main, article
 {
@@ -117,7 +127,7 @@ max-width: 90%;
 
 
 
-@media screen and (max-width:640px)
+@media screen and (max-width:830px)
 {
 nav
 {

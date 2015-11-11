@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+    <head>
+         <meta charset="utf-8" />
+        <link rel="stylesheet" href="style.css" />
+	<meta name="viewport" content="with=device-width,initial-scale = 1">
+         <script src="Box2D.js"></script>
+        
+        <style>
+            canvas {
+  -moz-transform: scaleY(-1);    /* Gecko */
+  -o-transform: scaleY(-1);      /* Opera */
+  -webkit-transform: scaleY(-1); /* Webkit */
+  transform: scaleY(-1);         /* Standard */
+  filter: FlipH;                 /* IE 6/7/8 */
+}
+        </style>
+    </head>
+    <body>
+        <header>
+                   
+
+                     <h2>My site is so cool. </h2>
+          
+        </header>
+   
+            <nav>
+            <ul>
+                
+                      <li><a href="index.html">Test Connection</a></li>
+                <li><a href="page2.html">Basics html5 </a></li>
+                 <li><a href="page3.html">Test 2D physics: 1 </a></li>
+       
+            </ul>
+        </nav>
+        <section>
+            <main>
+                 <canvas id="myCanvas" width="640" height="500" style="border:1px solid #000000;"></canvas>
+            </main>
+            <script type="text/javascript">
+             var canvasD = document.getElementById('myCanvas');
+      var context = canvasD.getContext('2d');
+            var canvas = canvasD;//
+            //projection
+            //
+            //translation sur X
+           var scale= 10.0;
+            
+             //81115 
+        // These are global shorthands we declare for Box2D primitives
+        // we'll be using very frequently.
+        Vec2 = Box2D.Common.Math.b2Vec2;
+        BodyDef = Box2D.Dynamics.b2BodyDef;
+        Body = Box2D.Dynamics.b2Body;
+        FixtureDef = Box2D.Dynamics.b2FixtureDef;
+        Fixture = Box2D.Dynamics.b2Fixture;
+        World = Box2D.Dynamics.b2World;
+        MassData = Box2D.Collision.Shapes.b2MassData;
+        PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
+        CircleShape = Box2D.Collision.Shapes.b2CircleShape;
+        DebugDraw = Box2D.Dynamics.b2DebugDraw;
+        RevoluteJointDef = Box2D.Dynamics.Joints.b2RevoluteJointDef;
+        b2AABB = Box2D.Collision.b2AABB;
+
+      // var PHYSICS_UPDATE_PER_SEC = 60;
+       var PHYSICS_LOOP_HZ = 1.0/60.0;
+       
+      var entities = new Array();
+       var bodies = new Array();
+      
+     var myRectangle = {
+        x: 20.0,
+        y: 50,
+        width: 10,
+        height: 10,
+        borderWidth: 2,
+        physBody:null
+      };
+      
+      var myRectangle2 = {
+        x: 50.0,
+        y: 20.0,
+        width: 10,
+        height: 10,
+        borderWidth: 2,
+        physBody:null
+      };
+      
+     
+    
+      
+       var groundD = {
+        x: canvas.width/2/scale,
+        y: 0.0,
+        width: canvas.width/scale,
+        height: 10,
+        borderWidth: 2,
+        physBody:null
+      };
+           var groundD2 = {
+        x: canvas.width/2/scale,
+        y: canvas.height/scale,
+        width: canvas.width/scale,
+        height: 10,
+        borderWidth: 2,
+        physBody:null
+      };
+     
+       var groundD3 = {
+        x: 0,
+        y: canvas.height/2/scale,
+        width: 10,
+        height: canvas.height/scale,
+        borderWidth: 2,
+        physBody:null
+      };
+           var groundD4 = {
+        x: canvas.width/scale,
+        y: canvas.height/2/scale,
+        width: 10,
+        height: canvas.height/scale,
+        borderWidth: 2,
+        physBody:null
+      };
+       entities.push(groundD);
+       entities.push(groundD2);
+       entities.push(groundD3);
+       entities.push(groundD4);
+       entities.push(myRectangle);
+        entities.push(myRectangle2);
+
+     
+       //CREATION of world (100x100)||idéal 10-10)
+         world = new World(new Vec2(0,0.0), false);
+        function addGround(groundD)
+        {
+        
+          //create ground
+          var groundDef = new BodyDef();
+         // groundDef.position.Set(0.0,0.0);
+          groundDef.position.x = groundD.x;
+          groundDef.position.y = groundD.y;
+          
+          var groundBox = new PolygonShape();
+          groundBox.SetAsBox(groundD.width/2, groundD.height/2);
+           var dsf = new FixtureDef();
+           dsf.shape = groundBox;
+           var ground = world.CreateBody(groundDef);
+           ground.CreateFixture(dsf, 0.0);
+             return ground;  
+         }
+           
+           
+          function addBody(myRectangle)
+          {
+         //creation of body
+          var bodyDef = new BodyDef();
+          bodyDef.type = Body.b2_dynamicBody;
+          bodyDef.position.Set(myRectangle.x,myRectangle.y);
+          
+            var fixtureDefinition = new FixtureDef();
+       
+      
+           fixtureDefinition.density = 1;
+           //coefficien de glissement sur les autres
+           fixtureDefinition.friction = 1;
+           //elasticité en cas de rebons
+           fixtureDefinition.restitution = 1;
+     
+         
+       /// creation of the object
+       
+       fixtureDefinition.shape = new PolygonShape();
+       fixtureDefinition.shape.SetAsBox(myRectangle.width/2,myRectangle.height/2);
+       
+       var body = world.CreateBody(bodyDef);
+       body.CreateFixture(fixtureDefinition);
+           
+              return body;
+            }
+            
+            
+            
+            groundD.physBody = addGround(groundD); 
+            groundD2.physBody = addGround(groundD2);
+             groundD3.physBody = addGround(groundD3);
+             groundD3.physBody = addGround(groundD4);
+            myRectangle.physBody = addBody(myRectangle);
+            myRectangle2.physBody = addBody(myRectangle2);
+      
+      // console.log(body.GetPosition().x);
+       //body.SetLinearVelocity(new Vec2(1,1));
+       var refresh = function()
+    {
+       world.Step(
+             PHYSICS_LOOP_HZ , //frame rate
+             1,              // velocity iteration
+             1               // position iteration
+             );
+    //  console.log(body.GetPosition().x+':'+body.GetPosition().y);
+      /*
+      myRectangle.x = body.GetPosition().x ;
+      myRectangle.y = body.GetPosition().y ;
+        */
+       
+       world.DrawDebugData();
+       world.ClearForces();
+        };
+        
+         
+       //\\81115
+               
+    /*        Text = Class.extend({
+               content : {"string":null},
+               
+               load: function(map){
+                   xhrGet(map,this.text);
+               },
+          
+                text : function(xhr)
+                {
+                    content.string = xhr.response;
+                    console.log(content);
+                }
+            
+              });
+            var textO = new Text();
+            textO.load("data/tester.txt");
+            */
+            
+            //
+            
+            
+            </script>
+ 
+    <script>
+      window.requestAnimFrame = (function(callback) {
+        return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
+        function(callback) {
+          window.setTimeout(callback, 1000 / 60);
+        };
+      })();
+      
+      
+
+      
+      function animate(entities, canvas, context) {
+        
+          // update
+          // clear
+        
+          // draw
+          refresh();
+   
+              
+              
+      
+          // request new frame
+          requestAnimFrame(function() {
+            animate(entities, canvas, context);
+          });
+      
+      }
+     
+
+
+      window.addEventListener( "keydown",MX, true);
+      var speed = 10;
+      var xx = 0;
+      var yy = 0;
+     function MX(evt)
+     {
+      
+          if ( evt.keyCode == 37 ) 
+      {//left
+       console.log("left");
+       xx = -1;
+       if(speed<20)
+           speed++
+        }
+       if ( evt.keyCode == 39 ) 
+      {//right
+        console.log("right");
+        xx = 1;
+      }
+    if ( evt.keyCode == 38 ) 
+     {//up
+        console.log("up");
+        yy=1;
+     }
+        if ( evt.keyCode == 40 ) 
+      {//down
+        console.log("down");
+        yy=-1;
+      }
+      
+    myRectangle.physBody.SetLinearVelocity(new Vec2(xx * speed,
+                                                 yy * speed));
+    
+     }
+    animate(entities, canvasD, context);
+   
+     // drawRect(myRectangle, context);
+
+
+       var debugDraw = new DebugDraw();
+       debugDraw.SetSprite(document.getElementById("myCanvas").getContext("2d"));
+       debugDraw.SetDrawScale(scale);
+       debugDraw.SetFillAlpha(0.3);
+       debugDraw.SetLineThickness(1.0);
+       debugDraw.SetFlags(DebugDraw.e_shapeBit | DebugDraw.e_jointBit);
+       world.SetDebugDraw(debugDraw);
+    </script>
+        </section>
+           
+    
+        <footer>
+            <p>Copyright Olivia&Vasil corp - all right reserved<br />
+            <a href="#">Contact me !</a></p>
+        </footer>
+        
+    </body>
+</html>
