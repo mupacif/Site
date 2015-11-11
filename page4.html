@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+         <meta charset="utf-8" />
+        <link rel="stylesheet" href="style.css" />
+	<meta name="viewport" content="with=device-width,initial-scale = 1">
+    </head>
+    <body>
+        <header>
+                   
+
+                     <h2>My site is so cool. </h2>
+          
+        </header>
+   
+            <nav>
+            <ul>
+                
+                      <li><a href="index.html">Test Connection</a></li>
+                <li><a href="page2.html">Basics html5 </a></li>
+                 <li><a href="page3.html">Test 2D physics: 1 </a></li>
+                  <li><a href="page4.html">socket io </a></li>
+       
+            </ul>
+        </nav>
+        <section>
+            <main>
+     
+                <script>
+                var socket = io.connect('http://localhost');
+                socket.on('message', 
+                function(message)
+                {
+                 alert(message);
+                })
+                </script>
+                
+            </main>
+      
+        </section>
+           
+    
+        <footer>
+            <p>Copyright Olivia&Vasil corp - all right reserved<br />
+            <a href="#">Contact me !</a></p>
+        </footer>
+        
+    </body>
+</html>
