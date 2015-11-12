@@ -3,6 +3,7 @@ var mysql = require('mysql');
 var http = require('http');
 var url = require('url');
 var fs = require('fs');
+var result = null;
 //var querystring = requite('querystring');
 var mySqlClient = mysql.createConnection({
 host : "51.254.221.93",
@@ -12,16 +13,18 @@ database : "base1"
 
 });
 var selectQuery = 'SELECT * FROM Member';
+function msql(selectQuery)
+{
 mySqlClient.query(
-  selectQuery,
-  function select(error, results, fields) {
-    if (error) {
-      console.log(error);
+selectQuery,
+function select(error, results, fields) {
+if (error) {
+console.log(error);
       mySqlClient.end();
       return;
     }
- 
     if ( results.length > 0 )  { 
+      result = results;
       var firstResult = results[ 0 ];
       console.log('id: ' + firstResult['id']);
       console.log('login: ' + firstResult['login']);
@@ -29,9 +32,10 @@ mySqlClient.query(
     } else {
       console.log("Pas de données");
     }
-    mySqlClient.end();
+    //mySqlClient.end();
   }
 );
+}
 
 
 var post = function (request, response) {
@@ -56,7 +60,6 @@ var post = function (request, response) {
  }   
     
 var server = http.createServer(function(req,res){
-
 post(req,res); 
 //chargemnt d'un page html
 var page = url.parse(req.url).pathname;
@@ -102,9 +105,15 @@ fs.readFile('./'+page,
 
 
 var io = require('socket.io').listen(server);
-io.sockets.on('connection',
-function(socket){
-    socket.emit('message', 'Vous êtes bien connecté');   
-}         
-             );
-server.listen(80);
+io.sockets.on('connection',function(socket){
+msql(selectQuery);
+    console.log('hello');
+    socket.emit('message',result);
+//    socket.emit('message', 'Vous êtes bien connecté');   
+});
+
+
+server.listen(8888);
+
+
+

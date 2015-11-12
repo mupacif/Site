@@ -16,7 +16,7 @@
             <nav>
             <ul>
                 
-                      <li><a href="index.html">Test Connection</a></li>
+               <li><a href="index.html">Test Connection</a></li>
                 <li><a href="page2.html">Basics html5 </a></li>
                  <li><a href="page3.html">Test 2D physics: 1 </a></li>
                   <li><a href="page4.html">socket io </a></li>
@@ -25,16 +25,22 @@
         </nav>
         <section>
             <main>
-     
+               <div id="hey" ></div> 
+    		<script src="http://51.254.221.93:8888/socket.io/socket.io.js"></script>
                 <script>
-                var socket = io.connect('http://localhost');
-                socket.on('message', 
-                function(message)
-                {
-                 alert(message);
-                })
+		var msg = "";
+		var id= document.getElementById("hey");
+//		id.innerHTML = "sex";
+                var socket = io.connect('http://51.254.221.93:8888');
+                socket.on('message', function(message){
+              for(var u=0;u<message.length;u++)
+{
+	
+		msg+="login:"+message[u]['login']+":passw="+message[u]['password']+"<br>";
+}
+	id.innerHTML = msg;
+		 })
                 </script>
-                
             </main>
       
         </section>
