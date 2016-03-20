@@ -6,7 +6,7 @@ var fs = require('fs');
 var result = null;
 //var querystring = requite('querystring');
 var mySqlClient = mysql.createConnection({
-host : "51.254.221.93",
+host : "xxxxxxxxx",
 user : "pacimod1",
 password : "ertexs",
 database : "base1"
