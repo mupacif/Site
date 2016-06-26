@@ -7,8 +7,8 @@ var result = null;
 //var querystring = requite('querystring');
 var mySqlClient = mysql.createConnection({
 host : "xxxxxxxxx",
-user : "pacimod1",
-password : "ertexs",
+user : "#####",
+password : "#####",
 database : "base1"
 
 });
